@@ -1,35 +1,35 @@
 import Head from 'next/head'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+import { caesarShift } from '../utils/helpers'
 
-const lowerCaseAlphabet = [
-  'a',
-  'b',
-  'c',
-  'd',
-  'e',
-  'f',
-  'g',
-  'h',
-  'i',
-  'j',
-  'k',
-  'l',
-  'm',
-  'n',
-  'o',
-  'p',
-  'q',
-  'r',
-  's',
-  't',
-  'u',
-  'v',
-  'w',
-  'x',
-  'y',
-  'z',
+const alphabet = [
+  'A',
+  'B',
+  'C',
+  'D',
+  'E',
+  'F',
+  'G',
+  'H',
+  'I',
+  'J',
+  'K',
+  'L',
+  'M',
+  'N',
+  'O',
+  'P',
+  'Q',
+  'R',
+  'S',
+  'T',
+  'U',
+  'V',
+  'W',
+  'X',
+  'Y',
+  'Z',
 ]
 
 export default function Home() {
@@ -38,16 +38,14 @@ export default function Home() {
 
   function handleGenerate(e) {
     e.preventDefault()
-    let isOkay = true
     for (const letter of word.split('')) {
-      if (!lowerCaseAlphabet.includes(letter)) {
+      if (!alphabet.includes(letter.toUpperCase())) {
         alert('Your word can only have letters!')
-        isOkay = false
+        return
       }
     }
-    if (isOkay) {
-      router.push(`/play?word=${word}`)
-    }
+    const shifted = caesarShift(word, 7)
+    router.push(`/play?word=${shifted}`)
   }
 
   return (
