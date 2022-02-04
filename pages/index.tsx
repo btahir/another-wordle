@@ -40,12 +40,11 @@ export default function Home() {
       <footer className="flex h-24 w-full items-center justify-center border-t">
         <a
           className="flex items-center justify-center"
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+          href="https://twitter.com/deepwhitman"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className="ml-2 h-4" />
+          Built with <span className='mx-1 text-blue-600'>&#9829;</span> by Bilal Tahir          
         </a>
       </footer>
     </div>
