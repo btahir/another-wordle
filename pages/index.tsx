@@ -74,6 +74,7 @@ export default function Home() {
               <input
                 type="text"
                 minLength={5}
+                maxLength={5}
                 required
                 className="w-48 rounded-lg border border-blue-200 bg-blue-50 px-2 py-1 placeholder-blue-400 sm:w-64"
                 placeholder="Add your word"
