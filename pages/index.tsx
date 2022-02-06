@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { caesarShift } from '../utils/helpers'
 
-const alphabet = [
+const ALPHABET = [
   'A',
   'B',
   'C',
@@ -39,7 +39,7 @@ export default function Home() {
   function handleGenerate(e) {
     e.preventDefault()
     for (const letter of word.split('')) {
-      if (!alphabet.includes(letter.toUpperCase())) {
+      if (!ALPHABET.includes(letter.toUpperCase())) {
         alert('Your word can only have letters!')
         return
       }
