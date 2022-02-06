@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router'
 import { caesarShift, classNames } from '../utils/helpers'
 import { useEffect, useState, useRef } from 'react'
+import { HeartIcon, DuplicateIcon } from '@heroicons/react/solid'
 
 const ALPHABET_COLORS = {
   A: 'N',
@@ -194,6 +195,7 @@ function PlayPage() {
   const [wordColors, setWordColors] = useState(ALPHABET_COLORS)
   const [rowColors, setRowColors] = useState(ROW_COLORS)
   const [submittedRowNum, setSubmittedRowNum] = useState(-1)
+  const [showCopy, setShowCopy] = useState(false)
   const router = useRouter()
 
   // get word
@@ -217,6 +219,14 @@ function PlayPage() {
       `input[name=word-${rowNum}-${colNum}]`
     )
     currentField.focus()
+  }
+
+  function copyURL() {
+    setShowCopy(true)
+    navigator.clipboard.writeText(`https://another-wordle.vercel.app${router.asPath}`)
+    setTimeout(function () {
+      setShowCopy(false)
+    }, 1500)
   }
 
   function handleValidation(row) {
@@ -314,9 +324,21 @@ function PlayPage() {
 
   return (
     <div className="mx-auto w-full max-w-2xl">
-      <h1 className="mt-6 mb-12 text-center text-3xl font-bold text-blue-600">
+      <h1 className="my-6 text-center text-3xl font-bold text-blue-600">
         Guess My Wordle
       </h1>
+      <div className='my-6 mx-auto text-center flex items-center justify-center'>
+        <span className='mr-2 font-medium'>Share Link</span>
+        <input className='border border-slate-300 bg-slate-100 px-2 py-1 rounded' readOnly value={`https://another-wordle.vercel.app${router.asPath}`} />
+        <button className='relative' onClick={copyURL}>
+                <DuplicateIcon className='ml-2 h-6 w-6 text-blue-500' />
+                {showCopy ? (
+                  <div className='absolute top-0 inset-x-0 transform -translate-y-8 text-sm text-center text-slate-900'>
+                    Copied!
+                  </div>
+                ) : null}
+              </button>
+      </div>
       <div className="mx-auto space-y-2 text-center">
         {WORD_MAP.map((item) => {
           return (
