@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import { caesarShift, classNames } from '../utils/helpers'
-import { useEffect, useState, useRef } from 'react'
-import { HeartIcon, DuplicateIcon } from '@heroicons/react/solid'
+import { useEffect, useState } from 'react'
+import { DuplicateIcon } from '@heroicons/react/solid'
 
 const ALPHABET_COLORS = {
   A: 'N',
@@ -86,7 +86,7 @@ function Word({
       if (col <= 4) {
         const nextfield = document.querySelector(
           `input[name=word-${row}-${col + 1}]`
-        )
+        ) as HTMLElement
 
         // If found, focus the next field
         if (nextfield !== null) {
@@ -111,15 +111,15 @@ function Word({
     if (e.key === 'Backspace') {
       const currentField = document.querySelector(
         `input[name=word-${row}-${col}]`
-      )
+      ) as HTMLInputElement
       // delete current value
-      currentField.value = ''
+      currentField!.value = ''
       if (col > 0) {
         const nextfield = document.querySelector(
           `input[name=word-${row}-${col - 1}]`
-        )
+        ) as HTMLElement
         if (nextfield !== null) {
-          nextfield.focus()
+          nextfield?.focus()
         }
         if (col >= 0) {
           const temp = currentWordArray
@@ -216,13 +216,16 @@ function PlayPage() {
   function focusField() {
     const currentField = document.querySelector(
       `input[name=word-${rowNum}-${colNum}]`
-    )
-    currentField.focus()
+    ) as HTMLElement    
+    currentField?.focus()
+    
   }
 
   function copyURL() {
     setShowCopy(true)
-    navigator.clipboard.writeText(`https://another-wordle.vercel.app${router.asPath}`)
+    navigator.clipboard.writeText(
+      `https://another-wordle.vercel.app${router.asPath}`
+    )
     focusField()
     setTimeout(function () {
       setShowCopy(false)
@@ -230,7 +233,7 @@ function PlayPage() {
   }
 
   function handleValidation(row) {
-    let tempMap = wordColors
+    let tempMap : any  = wordColors 
     let tempRowColors = rowColors
     let successes = 0
     for (let i = 0; i < 5; i++) {
@@ -280,13 +283,13 @@ function PlayPage() {
       }
       const currentField = document.querySelector(
         `input[name=word-${rowNum}-${colNum}]`
-      )
+      ) as HTMLInputElement
       // delete current value
-      currentField.value = ''
+      currentField!.value = ''
       if (colNum > 0) {
         const nextfield = document.querySelector(
           `input[name=word-${rowNum}-${colNum - 1}]`
-        )
+        ) as HTMLElement
         if (nextfield !== null) {
           nextfield.focus()
         }
@@ -302,19 +305,19 @@ function PlayPage() {
       if (colNum <= 4) {
         const currentField = document.querySelector(
           `input[name=word-${rowNum}-${colNum}]`
-        )
+        ) as HTMLInputElement
         // update current value
-        currentField.value = l
+        currentField!.value = l
 
         const nextfield = document.querySelector(
           `input[name=word-${rowNum}-${colNum + 1}]`
-        )
+        ) as HTMLElement
 
         // If found, focus the next field
         if (nextfield !== null) {
           nextfield?.focus()
         }
-        let temp = currentWordArray
+        let temp : any = currentWordArray
         temp[colNum] = l
         setCurrentWordArray(temp)
         setColNum(colNum + 1)
@@ -327,17 +330,21 @@ function PlayPage() {
       <h1 className="my-6 text-center text-3xl font-bold text-blue-600">
         Guess My Wordle
       </h1>
-      <div className='my-6 mx-auto text-center flex items-center justify-center'>
-        <span className='mr-2 font-medium'>Share Link</span>
-        <input className='border border-slate-300 bg-slate-100 px-2 py-1 rounded' readOnly value={`https://another-wordle.vercel.app${router.asPath}`} />
-        <button className='relative' onClick={copyURL}>
-                <DuplicateIcon className='ml-2 h-6 w-6 text-blue-500' />
-                {showCopy ? (
-                  <div className='absolute top-0 inset-x-0 transform -translate-y-8 text-sm text-center text-slate-900'>
-                    Copied!
-                  </div>
-                ) : null}
-              </button>
+      <div className="my-6 mx-auto flex items-center justify-center text-center">
+        <span className="mr-2 font-medium">Share Link</span>
+        <input
+          className="rounded border border-slate-300 bg-slate-100 px-2 py-1"
+          readOnly
+          value={`https://another-wordle.vercel.app${router.asPath}`}
+        />
+        <button className="relative" onClick={copyURL}>
+          <DuplicateIcon className="ml-2 h-6 w-6 text-blue-500" />
+          {showCopy ? (
+            <div className="absolute inset-x-0 top-0 -translate-y-8 transform text-center text-sm text-slate-900">
+              Copied!
+            </div>
+          ) : null}
+        </button>
       </div>
       <div className="mx-auto space-y-2 text-center">
         {WORD_MAP.map((item) => {
@@ -367,6 +374,18 @@ function PlayPage() {
         wordColors={wordColors}
         handleKeyBoardClick={handleKeyBoardClick}
       />
+
+      <footer className="fixed bottom-0 inset-x-0 flex h-20 w-full items-center justify-center border-t">
+        <a
+          className="flex items-center justify-center"
+          href="https://twitter.com/deepwhitman"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Built with <span className="mx-1 text-blue-600">&#9829;</span> by
+          Bilal Tahir
+        </a>
+      </footer>
     </div>
   )
 }

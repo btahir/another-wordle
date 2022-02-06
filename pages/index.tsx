@@ -108,7 +108,7 @@ export default function Home() {
         </div>
       </main>
 
-      <footer className="flex h-24 w-full items-center justify-center border-t">
+      <footer className="flex h-20 w-full items-center justify-center border-t">
         <a
           className="flex items-center justify-center"
           href="https://twitter.com/deepwhitman"
