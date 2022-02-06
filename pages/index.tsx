@@ -2,6 +2,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { caesarShift } from '../utils/helpers'
+import { RANDOM_WORDS } from '../words'
 
 const ALPHABET = [
   'A',
@@ -48,6 +49,13 @@ export default function Home() {
     router.push(`/play?word=${shifted}`)
   }
 
+  function handleRandom() {
+    const randomIdx = Math.round(Math.random() * (RANDOM_WORDS.length - 1))
+    const randomWord = RANDOM_WORDS[randomIdx]
+    const shifted = caesarShift(randomWord, 7)
+    router.push(`/play?word=${shifted}`)
+  }
+
   return (
     <div className="flex min-h-screen flex-col items-center justify-center py-2">
       <Head>
@@ -82,12 +90,20 @@ export default function Home() {
                 onChange={(e) => setWord(e.target.value)}
               />
             </div>
-            <button
-              type="submit"
-              className="mt-12 rounded-lg bg-blue-600 px-3 py-2 font-medium text-white hover:bg-blue-700"
-            >
-              Generate Wordle
-            </button>
+            <div className="mt-12 flex items-center">
+              <button
+                type="submit"
+                className="mr-4 rounded-lg bg-blue-600 px-3 py-2 font-medium text-white hover:bg-blue-700"
+              >
+                Generate Wordle
+              </button>
+              <button
+                onClick={handleRandom}
+                className="rounded-lg border border-blue-600 px-3 py-2 font-medium text-blue-600 hover:text-blue-700"
+              >
+                Random Wordle
+              </button>
+            </div>
           </form>
         </div>
       </main>

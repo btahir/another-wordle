@@ -1,4 +1,4 @@
-const WORDS = [
+export const RANDOM_WORDS = [
   'their',
   'heart',
   'salty',
