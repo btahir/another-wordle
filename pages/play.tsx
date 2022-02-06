@@ -196,7 +196,9 @@ function PlayPage() {
 
   // initial focus
   useEffect(() => {
-    focusField()
+    if(rowNum < 6) {
+      focusField()
+    }    
   }, [rowNum])
 
   function focusField() {
@@ -209,6 +211,7 @@ function PlayPage() {
   function handleValidation(row) {
     let tempMap = wordColors
     let tempRowColors = rowColors
+    let successes = 0
     for (let i = 0; i < 5; i++) {
       const currentLetter = currentWordArray[i]
       if (selectedWordArray.includes(currentLetter)) {
@@ -217,6 +220,7 @@ function PlayPage() {
           // letter is in the exact position
           tempMap[currentLetter] = 'G'
           tempRowColors[row][i] = 'G'
+          successes += 1
         } else {
           tempMap[currentLetter] = 'Y'
           tempRowColors[row][i] = 'Y'
@@ -232,6 +236,12 @@ function PlayPage() {
     setColNum(0)
     setCurrentWordArray([])
     setSubmittedRowNum(submittedRowNum + 1)
+    if(successes === 5) {
+      alert('You Win!')
+    }
+    if (rowNum === 5) {
+      alert('Oops! Looks like you ran out of tries.')
+    }
   }
 
   return (
