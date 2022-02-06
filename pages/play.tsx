@@ -58,6 +58,7 @@ const QWERTY = [
 function Word({
   row,
   col,
+  colNum,
   setColNum,
   currentWordArray,
   setCurrentWordArray,
@@ -90,10 +91,10 @@ function Word({
         if (nextfield !== null) {
           nextfield?.focus()
         }
-        setColNum(col + 1)
         let temp = currentWordArray
-        temp[col] = value.toUpperCase()
+        temp[colNum] = value.toUpperCase()
         setCurrentWordArray(temp)
+        setColNum(colNum + 1)
       }
     }
   }
@@ -152,11 +153,12 @@ function Word({
   )
 }
 
-function KeyBoard({ wordColors }) {
+function KeyBoard({ wordColors, handleKeyBoardClick }) {
   function resolveKeyBoardRow(arr) {
     return arr.map((letter) => {
       return (
         <button
+          onClick={() => handleKeyBoardClick(letter)}
           key={letter}
           className={classNames(
             wordColors[letter] === 'G'
@@ -193,8 +195,6 @@ function PlayPage() {
   const [rowColors, setRowColors] = useState(ROW_COLORS)
   const [submittedRowNum, setSubmittedRowNum] = useState(-1)
   const router = useRouter()
-
-  // console.log('currentWordArray', currentWordArray)
 
   // get word
   useEffect(() => {
@@ -255,8 +255,65 @@ function PlayPage() {
     }
   }
 
+  function handleKeyBoardClick(l) {
+    // It should not be last input field
+    if (l === 'ENTER') {
+      if (currentWordArray.length < 5) {
+        alert('Not Enough Letters!')
+      } else {
+        handleValidation(rowNum)
+      }
+    } else if (l === 'BACK') {
+      if (colNum > 4) {
+        setColNum(4)
+        return
+      }
+      const currentField = document.querySelector(
+        `input[name=word-${rowNum}-${colNum}]`
+      )
+      // delete current value
+      currentField.value = ''
+      if (colNum > 0) {
+        const nextfield = document.querySelector(
+          `input[name=word-${rowNum}-${colNum - 1}]`
+        )
+        if (nextfield !== null) {
+          nextfield.focus()
+        }
+        if (colNum >= 0) {
+          const temp = currentWordArray
+          // pop last element
+          temp.pop()
+          setCurrentWordArray(temp)
+          colNum > 0 ? setColNum(colNum - 1) : null
+        }
+      }
+    } else {
+      if (colNum <= 4) {
+        const currentField = document.querySelector(
+          `input[name=word-${rowNum}-${colNum}]`
+        )
+        // update current value
+        currentField.value = l
+
+        const nextfield = document.querySelector(
+          `input[name=word-${rowNum}-${colNum + 1}]`
+        )
+
+        // If found, focus the next field
+        if (nextfield !== null) {
+          nextfield?.focus()
+        }
+        let temp = currentWordArray
+        temp[colNum] = l
+        setCurrentWordArray(temp)
+        setColNum(colNum + 1)
+      }
+    }
+  }
+
   return (
-    <div className="mx-auto w-full max-w-2xl" onClick={focusField}>
+    <div className="mx-auto w-full max-w-2xl">
       <h1 className="mt-6 mb-12 text-center text-3xl font-bold text-blue-600">
         Guess My Wordle
       </h1>
@@ -270,6 +327,7 @@ function PlayPage() {
                     key={index}
                     row={item.id}
                     col={index}
+                    colNum={colNum}
                     setColNum={setColNum}
                     currentWordArray={currentWordArray}
                     setCurrentWordArray={setCurrentWordArray}
@@ -283,7 +341,10 @@ function PlayPage() {
           )
         })}
       </div>
-      <KeyBoard wordColors={wordColors} />
+      <KeyBoard
+        wordColors={wordColors}
+        handleKeyBoardClick={handleKeyBoardClick}
+      />
     </div>
   )
 }
