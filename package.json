@@ -3,7 +3,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "run-prettier": "prettier --write ."
   },
   "dependencies": {
     "@heroicons/react": "^1.0.5",
@@ -17,7 +18,7 @@
     "autoprefixer": "^10.4.0",
     "postcss": "^8.4.5",
     "prettier": "^2.5.1",
-    "prettier-plugin-tailwindcss": "^0.1.1",
+    "prettier-plugin-tailwindcss": "^0.1.5",
     "tailwindcss": "^3.0.7",
     "typescript": "4.5.4"
   }

@@ -153,8 +153,12 @@ export default function PlayPage() {
   }
 
   return (
-    <div className='mx-auto w-full max-w-2xl'>
-      <Modal finished={finished} winning={winning} selectedWordArray={selectedWordArray} />
+    <div className="mx-auto w-full max-w-2xl">
+      <Modal
+        finished={finished}
+        winning={winning}
+        selectedWordArray={selectedWordArray}
+      />
       <SEO />
       <h1 className="my-6 text-center text-3xl font-bold text-blue-600">
         Guess My Wordle

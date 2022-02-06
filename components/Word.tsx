@@ -2,15 +2,15 @@ import { useEffect, useState, FormEvent, KeyboardEvent } from 'react'
 import { classNames } from '@/utils/helpers'
 
 interface WordProps {
-  row : number
-  col : number
-  colNum : number
-  setColNum : (num : number) => void
-  currentWordArray : string[]
-  setCurrentWordArray : (arr : string[]) => void
-  handleValidation : (num : number) => void
-  submittedRowNum : number
-  rowColors : string[][]
+  row: number
+  col: number
+  colNum: number
+  setColNum: (num: number) => void
+  currentWordArray: string[]
+  setCurrentWordArray: (arr: string[]) => void
+  handleValidation: (num: number) => void
+  submittedRowNum: number
+  rowColors: string[][]
 }
 
 export default function Word({
@@ -23,7 +23,7 @@ export default function Word({
   handleValidation,
   submittedRowNum,
   rowColors,
-} : WordProps) {
+}: WordProps) {
   const [currentLetter, setCurrentLetter] = useState('')
   const [currentColor, setCurrentColor] = useState('N')
 
@@ -33,7 +33,7 @@ export default function Word({
     }
   }, [submittedRowNum])
 
-  function handleChange(e : FormEvent<HTMLInputElement>) {
+  function handleChange(e: FormEvent<HTMLInputElement>) {
     const { maxLength, value } = e.currentTarget
     setCurrentLetter(value.toUpperCase())
 

@@ -1,5 +1,5 @@
 // source: https://gist.github.com/EvanHahn/2587465
-export function caesarShift(str: string, amount: number) : string {
+export function caesarShift(str: string, amount: number): string {
   // Wrap the amount
   if (amount < 0) {
     return caesarShift(str, amount + 26)
@@ -37,6 +37,6 @@ export function caesarShift(str: string, amount: number) : string {
   return output
 }
 
-export function classNames(...classes : string[]) : string {
+export function classNames(...classes: string[]): string {
   return classes.filter(Boolean).join(' ')
 }

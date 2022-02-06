@@ -10,8 +10,8 @@ export default function KeyBoard({
   wordColors,
   handleKeyBoardClick,
 }: KeyBoardProps) {
-  function resolveKeyBoardRow(arr : string[]) {
-    return arr.map((letter : string) => {
+  function resolveKeyBoardRow(arr: string[]) {
+    return arr.map((letter: string) => {
       return (
         <button
           onClick={() => handleKeyBoardClick(letter)}
