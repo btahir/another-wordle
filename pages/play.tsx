@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { caesarShift } from '../utils/helpers'
+import { caesarShift, classNames } from '../utils/helpers'
 import { useEffect, useState, useRef } from 'react'
 
 const WORD_MAP = [
@@ -11,10 +11,17 @@ const WORD_MAP = [
   ,
 ]
 
-function Word({ row, col, setColNum, currentWordArray, setCurrentWordArray }) {
+function Word({
+  row,
+  col,
+  setColNum,
+  currentWordArray,
+  setCurrentWordArray,
+  handleValidation,
+}) {
   function handleChange(e) {
-    const { maxLength, value, name } = e.target
-  
+    const { maxLength, value } = e.target
+
     // Check if no of char in field == maxlength
     if (value.length >= maxLength) {
       // It should not be last input field
@@ -25,7 +32,7 @@ function Word({ row, col, setColNum, currentWordArray, setCurrentWordArray }) {
 
         // If found, focus the next field
         if (nextfield !== null) {
-          nextfield.focus()
+          nextfield?.focus()
         }
         setColNum(col + 1)
         let temp = currentWordArray
@@ -37,7 +44,11 @@ function Word({ row, col, setColNum, currentWordArray, setCurrentWordArray }) {
 
   function handleKeyDown(e) {
     if (e.key === 'Enter') {
-      console.log('do validate')
+      if (currentWordArray.length < 5) {
+        alert('Not Enough Letters!')
+      } else {
+        handleValidation()
+      }
     }
     if (e.key === 'Backspace') {
       const currentField = document.querySelector(
@@ -52,13 +63,13 @@ function Word({ row, col, setColNum, currentWordArray, setCurrentWordArray }) {
         if (nextfield !== null) {
           nextfield.focus()
         }
-        if(col >= 0) {
+        if (col >= 0) {
           const temp = currentWordArray
           // pop last element
           temp.pop()
           setCurrentWordArray(temp)
           col > 0 ? setColNum(col - 1) : null
-        }        
+        }
       }
     }
   }
@@ -67,7 +78,9 @@ function Word({ row, col, setColNum, currentWordArray, setCurrentWordArray }) {
     <input
       id={`word-${row}-${col}`}
       name={`word-${row}-${col}`}
-      className="pointer-events-none h-12 w-12 border border-slate-400"
+      className={classNames(
+        'pointer-events-none h-12 w-12 border border-slate-400 text-center text-2xl font-extrabold uppercase'
+      )}
       minLength={1}
       maxLength={1}
       onKeyDown={handleKeyDown}
@@ -98,6 +111,15 @@ function PlayPage() {
     currentField.focus()
   }
 
+  function handleValidation() {
+    if (rowNum === 4) {
+      console.log('Game End')
+    } else {
+      setRowNum(rowNum + 1)
+      setColNum(0)
+    }
+  }
+
   return (
     <div className="mx-auto w-full max-w-6xl" onClick={focusField}>
       <h1 className="mt-6 mb-12 text-center text-3xl font-bold text-blue-600">
@@ -110,12 +132,13 @@ function PlayPage() {
               {item.val.map((subItem, index) => {
                 return (
                   <Word
+                    key={index}
                     row={item.id}
                     col={index}
                     setColNum={setColNum}
                     currentWordArray={currentWordArray}
                     setCurrentWordArray={setCurrentWordArray}
-                    key={index}
+                    handleValidation={handleValidation}
                   />
                 )
               })}

@@ -36,3 +36,7 @@ export function caesarShift(str, amount) {
   // All done!
   return output
 }
+
+export function classNames(...classes) {
+  return classes.filter(Boolean).join(' ')
+}
