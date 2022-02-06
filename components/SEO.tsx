@@ -4,7 +4,7 @@ function SEO() {
   return (
     <Head>
       <title>Another Wordle</title>
-      <link rel="icon" href="/favicon.ico" />
+      <link rel="icon" href="/icons/favicon.ico" />
       <meta name="twitter:card" content="summary_large_image" key="twcard" />
       <meta
         property="og:url"
@@ -13,7 +13,7 @@ function SEO() {
       />
       <meta
         property="og:image"
-        content="https://another-wordle.vercel.app/preview.jpeg"
+        content="https://another-wordle.vercel.app/images/preview.png"
         key="ogimage"
       />
       <meta

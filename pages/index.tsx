@@ -61,7 +61,7 @@ export default function Home() {
       <SEO />
 
       <main className="flex w-full flex-1 flex-col items-center justify-start px-4 text-center">
-        <h1 className="mt-6 text-3xl font-bold sm:text-4xl">
+        <h1 className="mt-32 text-3xl font-bold sm:text-4xl">
           Welcome to{' '}
           <a className="inline-block text-blue-600" href="https://nextjs.org">
             Your Wordle
