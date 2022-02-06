@@ -1,9 +1,16 @@
 import { classNames } from '@/utils/helpers'
 import { QWERTY } from '@/utils/constants'
+interface KeyBoardProps {
+  wordColors: any
+  handleKeyBoardClick: any
+}
 
-export default function KeyBoard({ wordColors, handleKeyBoardClick }) {
-  function resolveKeyBoardRow(arr) {
-    return arr.map((letter) => {
+export default function KeyBoard({
+  wordColors,
+  handleKeyBoardClick,
+}: KeyBoardProps) {
+  function resolveKeyBoardRow(arr : string[]) {
+    return arr.map((letter : string) => {
       return (
         <button
           onClick={() => handleKeyBoardClick(letter)}

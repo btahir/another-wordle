@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useState, FormEvent } from 'react'
 import { caesarShift } from '@/utils/helpers'
 import { RANDOM_WORDS } from '@/words/index'
 import SEO from '@/components/SEO'
@@ -37,7 +37,7 @@ export default function Home() {
   const [word, setWord] = useState('')
   const router = useRouter()
 
-  function handleGenerate(e) {
+  function handleGenerate(e: FormEvent<HTMLElement>): void {
     e.preventDefault()
     for (const letter of word.split('')) {
       if (!ALPHABET.includes(letter.toUpperCase())) {

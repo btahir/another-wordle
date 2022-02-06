@@ -10,21 +10,21 @@ import { useRouter } from 'next/router'
 import { DuplicateIcon } from '@heroicons/react/solid'
 
 export default function PlayPage() {
-  const [rowNum, setRowNum] = useState(0)
-  const [colNum, setColNum] = useState(0)
-  const [selectedWordArray, setSelectedWordArray] = useState([])
-  const [currentWordArray, setCurrentWordArray] = useState([])
-  const [wordColors, setWordColors] = useState(ALPHABET_COLORS)
-  const [rowColors, setRowColors] = useState(ROW_COLORS)
-  const [submittedRowNum, setSubmittedRowNum] = useState(-1)
-  const [showCopy, setShowCopy] = useState(false)
+  const [rowNum, setRowNum] = useState<number>(0)
+  const [colNum, setColNum] = useState<number>(0)
+  const [selectedWordArray, setSelectedWordArray] = useState<string[]>([])
+  const [currentWordArray, setCurrentWordArray] = useState<string[]>([])
+  const [wordColors, setWordColors] = useState<any>(ALPHABET_COLORS)
+  const [rowColors, setRowColors] = useState<string[][]>(ROW_COLORS)
+  const [submittedRowNum, setSubmittedRowNum] = useState<number>(-1)
+  const [showCopy, setShowCopy] = useState<boolean>(false)
   const router = useRouter()
 
   // get word
   useEffect(() => {
     if (router && router.query.word) {
-      const unshifted = caesarShift(router.query.word, -7).toUpperCase()
-      setSelectedWordArray(unshifted.split(''))
+      const unshifted : string[] = caesarShift(String(router.query.word), -7).toUpperCase().split('')
+      setSelectedWordArray(unshifted)
     }
   }, [router])
 
@@ -53,7 +53,7 @@ export default function PlayPage() {
     }, 1500)
   }
 
-  function handleValidation(row) {
+  function handleValidation(row : number) : void {
     let tempMap: any = wordColors
     let tempRowColors = rowColors
     let successes = 0
@@ -89,7 +89,7 @@ export default function PlayPage() {
     }
   }
 
-  function handleKeyBoardClick(l) {
+  function handleKeyBoardClick(l : string) : void {
     // It should not be last input field
     if (l === 'ENTER') {
       if (currentWordArray.length < 5) {
