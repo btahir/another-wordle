@@ -1,7 +1,7 @@
 # Another Wordle - Next.js + Tailwind CSS + Typescript Starter
 
 <div align="center">
-<img src="https://github.com/btahir/another-wordlea/blob/main/public/images/preview.png">
+<img src="https://github.com/btahir/another-wordle/blob/main/public/images/preview.png">
 <p align="center">
   <a href="https://another-wordle.vercel.app/">Live Demo</a> •
   <a href="https://twitter.com/deepwhitman">Follow me on Twitter</a>
