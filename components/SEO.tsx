@@ -8,22 +8,22 @@ function SEO() {
       <meta name="twitter:card" content="summary_large_image" key="twcard" />
       <meta
         property="og:url"
-        content="https://twitter-images.vercel.app"
+        content="https://another-wordle.vercel.app"
         key="ogurl"
       />
       <meta
         property="og:image"
-        content="https://twitter-images.vercel.app/preview.jpeg"
+        content="https://another-wordle.vercel.app/preview.jpeg"
         key="ogimage"
       />
       <meta
         property="og:title"
-        content="Twitter Card Image Creator"
+        content="Another Wordle"
         key="ogtitle"
       />
       <meta
         property="og:description"
-        content="Instantly create perfectly sized Twitter Images"
+        content="Generate your custom wordle and share with friends."
         key="ogdesc"
       />
     </Head>

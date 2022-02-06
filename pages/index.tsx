@@ -1,8 +1,8 @@
-import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import { caesarShift } from '../utils/helpers'
-import { RANDOM_WORDS } from '../words'
+import { caesarShift } from '@/utils/helpers'
+import { RANDOM_WORDS } from '@/words/index'
+import SEO from '@/components/SEO'
 
 const ALPHABET = [
   'A',
@@ -58,10 +58,7 @@ export default function Home() {
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center py-2">
-      <Head>
-        <title>Your Wordle</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <SEO />
 
       <main className="flex w-full flex-1 flex-col items-center justify-start px-4 text-center">
         <h1 className="mt-6 text-3xl font-bold sm:text-4xl">
