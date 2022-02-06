@@ -11,11 +11,10 @@ const WORD_MAP = [
   ,
 ]
 
-function Word({ row, col, setColNum }) {
+function Word({ row, col, setColNum, currentWordArray, setCurrentWordArray }) {
   function handleChange(e) {
     const { maxLength, value, name } = e.target
-    console.log(row, col)
-
+  
     // Check if no of char in field == maxlength
     if (value.length >= maxLength) {
       // It should not be last input field
@@ -23,13 +22,15 @@ function Word({ row, col, setColNum }) {
         const nextfield = document.querySelector(
           `input[name=word-${row}-${col + 1}]`
         )
-        console.log(nextfield)
 
         // If found, focus the next field
         if (nextfield !== null) {
           nextfield.focus()
         }
-        col <= 4 ? setColNum(col + 1) : null
+        setColNum(col + 1)
+        let temp = currentWordArray
+        temp[col] = value
+        setCurrentWordArray(temp)
       }
     }
   }
@@ -51,7 +52,13 @@ function Word({ row, col, setColNum }) {
         if (nextfield !== null) {
           nextfield.focus()
         }
-        col > 0 ? setColNum(col - 1) : null
+        if(col >= 0) {
+          const temp = currentWordArray
+          // pop last element
+          temp.pop()
+          setCurrentWordArray(temp)
+          col > 0 ? setColNum(col - 1) : null
+        }        
       }
     }
   }
@@ -72,13 +79,17 @@ function Word({ row, col, setColNum }) {
 function PlayPage() {
   const [rowNum, setRowNum] = useState(0)
   const [colNum, setColNum] = useState(0)
+  const [currentWordArray, setCurrentWordArray] = useState([])
   const router = useRouter()
+
+  console.log('currentWordArray', currentWordArray)
 
   // initial focus
   useEffect(() => {
     focusField()
   }, [rowNum])
   // const unshifted = caesarShift(router.query.word, -7)
+  // console.log(router.query.word)
 
   function focusField() {
     const currentField = document.querySelector(
@@ -102,6 +113,8 @@ function PlayPage() {
                     row={item.id}
                     col={index}
                     setColNum={setColNum}
+                    currentWordArray={currentWordArray}
+                    setCurrentWordArray={setCurrentWordArray}
                     key={index}
                   />
                 )
