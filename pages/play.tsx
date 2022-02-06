@@ -32,12 +32,12 @@ const ALPHABET_COLORS = {
 }
 
 const ROW_COLORS = [
-  ['N','N','N','N','N'],
-  ['N','N','N','N','N'],
-  ['N','N','N','N','N'],
-  ['N','N','N','N','N'],
-  ['N','N','N','N','N'],
-  ['N','N','N','N','N'],
+  ['N', 'N', 'N', 'N', 'N'],
+  ['N', 'N', 'N', 'N', 'N'],
+  ['N', 'N', 'N', 'N', 'N'],
+  ['N', 'N', 'N', 'N', 'N'],
+  ['N', 'N', 'N', 'N', 'N'],
+  ['N', 'N', 'N', 'N', 'N'],
 ]
 
 const WORD_MAP = [
@@ -69,14 +69,10 @@ function Word({
   const [currentColor, setCurrentColor] = useState('N')
 
   useEffect(() => {
-    console.log('ran')
     if (submittedRowNum === row) {
-      console.log('ran as', currentLetter)
       setCurrentColor(rowColors[row][col])
     }
   }, [submittedRowNum])
-
-  console.log(currentColor)
 
   function handleChange(e) {
     const { maxLength, value } = e.target
@@ -139,7 +135,13 @@ function Word({
       id={`word-${row}-${col}`}
       name={`word-${row}-${col}`}
       className={classNames(
-        currentColor === 'G' ? 'bg-green-400' :  currentColor === 'Y' ? 'bg-yellow-400' : currentColor === 'B' ? 'bg-slate-300' : '',
+        currentColor === 'G'
+          ? 'bg-green-400'
+          : currentColor === 'Y'
+          ? 'bg-yellow-400'
+          : currentColor === 'B'
+          ? 'bg-slate-300'
+          : '',
         'pointer-events-none h-12 w-12 border border-slate-400 text-center text-2xl font-extrabold uppercase'
       )}
       minLength={1}
@@ -150,16 +152,27 @@ function Word({
   )
 }
 
-function KeyBoard() {
+function KeyBoard({ wordColors }) {
   function resolveKeyBoardRow(arr) {
-    return arr.map((letter) => (
-      <button
-        key={letter}
-        className="m-1 rounded bg-slate-200 px-2 py-2 text-sm font-medium sm:px-3 sm:py-4 sm:text-base"
-      >
-        {letter}
-      </button>
-    ))
+    return arr.map((letter) => {
+      return (
+        <button
+          key={letter}
+          className={classNames(
+            wordColors[letter] === 'G'
+              ? 'bg-green-400'
+              : wordColors[letter] === 'Y'
+              ? 'bg-yellow-400'
+              : wordColors[letter] === 'B'
+              ? 'bg-slate-400'
+              : 'bg-slate-200',
+            'm-1 rounded px-2 py-2 text-sm font-medium sm:px-3 sm:py-4 sm:text-base'
+          )}
+        >
+          {letter}
+        </button>
+      )
+    })
   }
 
   return (
@@ -181,12 +194,10 @@ function PlayPage() {
   const [submittedRowNum, setSubmittedRowNum] = useState(-1)
   const router = useRouter()
 
-  console.log('currentWordArray', currentWordArray)
-  console.log('wordColors', rowColors)
+  // console.log('currentWordArray', currentWordArray)
 
   // get word
   useEffect(() => {
-    console.log('ran')
     if (router && router.query.word) {
       const unshifted = caesarShift(router.query.word, -7).toUpperCase()
       console.log(unshifted.split(''))
@@ -196,9 +207,9 @@ function PlayPage() {
 
   // initial focus
   useEffect(() => {
-    if(rowNum < 6) {
+    if (rowNum < 6) {
       focusField()
-    }    
+    }
   }, [rowNum])
 
   function focusField() {
@@ -236,7 +247,7 @@ function PlayPage() {
     setColNum(0)
     setCurrentWordArray([])
     setSubmittedRowNum(submittedRowNum + 1)
-    if(successes === 5) {
+    if (successes === 5) {
       alert('You Win!')
     }
     if (rowNum === 5) {
@@ -272,7 +283,7 @@ function PlayPage() {
           )
         })}
       </div>
-      <KeyBoard />
+      <KeyBoard wordColors={wordColors} />
     </div>
   )
 }
