@@ -202,7 +202,6 @@ function PlayPage() {
   useEffect(() => {
     if (router && router.query.word) {
       const unshifted = caesarShift(router.query.word, -7).toUpperCase()
-      console.log(unshifted.split(''))
       setSelectedWordArray(unshifted.split(''))
     }
   }, [router])
@@ -224,6 +223,7 @@ function PlayPage() {
   function copyURL() {
     setShowCopy(true)
     navigator.clipboard.writeText(`https://another-wordle.vercel.app${router.asPath}`)
+    focusField()
     setTimeout(function () {
       setShowCopy(false)
     }, 1500)
