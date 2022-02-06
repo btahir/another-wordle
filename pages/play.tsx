@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import SEO from '@/components/SEO'
+import Modal from '@/components/Modal'
 import Word from '@/components/Word'
 import KeyBoard from '@/components/KeyBoard'
 
@@ -18,12 +19,16 @@ export default function PlayPage() {
   const [rowColors, setRowColors] = useState<string[][]>(ROW_COLORS)
   const [submittedRowNum, setSubmittedRowNum] = useState<number>(-1)
   const [showCopy, setShowCopy] = useState<boolean>(false)
+  const [finished, setFinished] = useState<boolean>(false)
+  const [winning, setWinning] = useState<boolean>(false)
   const router = useRouter()
 
   // get word
   useEffect(() => {
     if (router && router.query.word) {
-      const unshifted : string[] = caesarShift(String(router.query.word), -7).toUpperCase().split('')
+      const unshifted: string[] = caesarShift(String(router.query.word), -7)
+        .toUpperCase()
+        .split('')
       setSelectedWordArray(unshifted)
     }
   }, [router])
@@ -53,7 +58,7 @@ export default function PlayPage() {
     }, 1500)
   }
 
-  function handleValidation(row : number) : void {
+  function handleValidation(row: number): void {
     let tempMap: any = wordColors
     let tempRowColors = rowColors
     let successes = 0
@@ -82,14 +87,15 @@ export default function PlayPage() {
     setCurrentWordArray([])
     setSubmittedRowNum(submittedRowNum + 1)
     if (successes === 5) {
-      alert('You Win!')
+      setFinished(true)
+      setWinning(true)
     }
     if (rowNum === 5) {
-      alert('Oops! Looks like you ran out of tries.')
+      setFinished(true)
     }
   }
 
-  function handleKeyBoardClick(l : string) : void {
+  function handleKeyBoardClick(l: string): void {
     // It should not be last input field
     if (l === 'ENTER') {
       if (currentWordArray.length < 5) {
@@ -147,7 +153,8 @@ export default function PlayPage() {
   }
 
   return (
-    <div className="mx-auto w-full max-w-2xl">
+    <div className='mx-auto w-full max-w-2xl'>
+      <Modal finished={finished} winning={winning} selectedWordArray={selectedWordArray} />
       <SEO />
       <h1 className="my-6 text-center text-3xl font-bold text-blue-600">
         Guess My Wordle

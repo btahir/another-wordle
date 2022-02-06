@@ -1,5 +1,6 @@
 import { classNames } from '@/utils/helpers'
 import { QWERTY } from '@/utils/constants'
+
 interface KeyBoardProps {
   wordColors: any
   handleKeyBoardClick: any
