@@ -153,62 +153,64 @@ export default function PlayPage() {
   }
 
   return (
-    <div className="mx-auto w-full max-w-2xl">
+    <div className="">
       <Modal
         finished={finished}
         winning={winning}
         selectedWordArray={selectedWordArray}
       />
       <SEO />
-      <h1 className="my-6 text-center text-3xl font-bold text-blue-600">
-        Guess My Wordle
-      </h1>
-      <div className="my-6 mx-auto flex items-center justify-center text-center">
-        <span className="mr-2 font-medium">Share Link</span>
-        <input
-          className="rounded border border-slate-300 bg-slate-100 px-2 py-1"
-          readOnly
-          value={`https://another-wordle.vercel.app${router.asPath}`}
+      <main className="mx-auto w-full max-w-2xl min-h-screen pb-12">
+        <h1 className="my-6 text-center text-3xl font-bold text-blue-600">
+          Guess My Wordle
+        </h1>
+        <div className="my-6 mx-auto flex items-center justify-center text-center">
+          <span className="mr-2 font-medium">Share Link</span>
+          <input
+            className="rounded border border-slate-300 bg-slate-100 px-2 py-1"
+            readOnly
+            value={`https://another-wordle.vercel.app${router.asPath}`}
+          />
+          <button className="relative" onClick={copyURL}>
+            <DuplicateIcon className="ml-2 h-6 w-6 text-blue-500" />
+            {showCopy ? (
+              <div className="absolute inset-x-0 top-0 -translate-y-8 transform text-center text-sm text-slate-900">
+                Copied!
+              </div>
+            ) : null}
+          </button>
+        </div>
+        <div className="mx-auto space-y-2 text-center">
+          {WORD_MAP.map((item) => {
+            return (
+              <div key={item.id} className="space-x-2">
+                {item.val.map((subItem, index) => {
+                  return (
+                    <Word
+                      key={index}
+                      row={item.id}
+                      col={index}
+                      colNum={colNum}
+                      setColNum={setColNum}
+                      currentWordArray={currentWordArray}
+                      setCurrentWordArray={setCurrentWordArray}
+                      handleValidation={handleValidation}
+                      submittedRowNum={submittedRowNum}
+                      rowColors={rowColors}
+                    />
+                  )
+                })}
+              </div>
+            )
+          })}
+        </div>
+        <KeyBoard
+          wordColors={wordColors}
+          handleKeyBoardClick={handleKeyBoardClick}
         />
-        <button className="relative" onClick={copyURL}>
-          <DuplicateIcon className="ml-2 h-6 w-6 text-blue-500" />
-          {showCopy ? (
-            <div className="absolute inset-x-0 top-0 -translate-y-8 transform text-center text-sm text-slate-900">
-              Copied!
-            </div>
-          ) : null}
-        </button>
-      </div>
-      <div className="mx-auto space-y-2 text-center">
-        {WORD_MAP.map((item) => {
-          return (
-            <div key={item.id} className="space-x-2">
-              {item.val.map((subItem, index) => {
-                return (
-                  <Word
-                    key={index}
-                    row={item.id}
-                    col={index}
-                    colNum={colNum}
-                    setColNum={setColNum}
-                    currentWordArray={currentWordArray}
-                    setCurrentWordArray={setCurrentWordArray}
-                    handleValidation={handleValidation}
-                    submittedRowNum={submittedRowNum}
-                    rowColors={rowColors}
-                  />
-                )
-              })}
-            </div>
-          )
-        })}
-      </div>
-      <KeyBoard
-        wordColors={wordColors}
-        handleKeyBoardClick={handleKeyBoardClick}
-      />
+      </main>
 
-      <footer className="fixed inset-x-0 bottom-0 flex h-20 w-full items-center justify-center border-t">
+      <footer className="flex h-20 w-full items-center justify-center border-t">
         <a
           className="flex items-center justify-center"
           href="https://twitter.com/deepwhitman"
