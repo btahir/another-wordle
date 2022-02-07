@@ -14,7 +14,7 @@ export default function KeyBoard({
     return arr.map((letter: string) => {
       return (
         <button
-          onClick={() => handleKeyBoardClick(letter)}
+          onClick={(e) => handleKeyBoardClick(e, letter)}
           key={letter}
           className={classNames(
             wordColors[letter] === 'G'
@@ -24,7 +24,7 @@ export default function KeyBoard({
               : wordColors[letter] === 'B'
               ? 'bg-slate-400'
               : 'bg-slate-200',
-            'm-1 rounded px-2 py-2 text-sm font-medium sm:px-3 sm:py-4 sm:text-base'
+            'm-1 rounded p-2 text-sm font-medium sm:px-3 sm:py-4 sm:text-base'
           )}
         >
           {letter}

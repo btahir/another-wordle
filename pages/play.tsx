@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, KeyboardEvent } from 'react'
 
 import SEO from '@/components/SEO'
 import Modal from '@/components/Modal'
@@ -95,7 +95,8 @@ export default function PlayPage() {
     }
   }
 
-  function handleKeyBoardClick(l: string): void {
+  function handleKeyBoardClick(e : KeyboardEvent<HTMLElement>, l: string): void {
+    e.preventDefault()
     // It should not be last input field
     if (l === 'ENTER') {
       if (currentWordArray.length < 5) {
