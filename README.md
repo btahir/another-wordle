@@ -13,3 +13,7 @@ This is a Next.js + Tailwind CSS starter for the very fun Wordle app.
 An added feature in this implementation is that you can generate your own custom word and then share that link with you friends to play with.
 
 You can check out the demo [`here`](https://another-wordle.vercel.app/).
+
+## Issues/Disclaimer
+
+This was a hacky weekend project so has bugs and the UI is nowhere near as good as the original. 
